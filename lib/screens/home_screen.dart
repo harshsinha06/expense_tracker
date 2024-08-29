@@ -3,8 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/finance_model.dart';
 import 'update_income_screen.dart';
+import 'transaction_history_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,11 +54,11 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.assessment),
-              title: const Text('Budget'),
+              leading: const Icon(Icons.report),
+              title: const Text('Reports'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/budget');
+                Navigator.pushNamed(context, '/reports');
               },
             ),
             ListTile(
@@ -95,24 +98,33 @@ class HomeScreen extends StatelessWidget {
                           '₹${financeModel.totalIncome.toStringAsFixed(2)}')),
                 ),
                 const SizedBox(height: 10),
-                Card(
-                  elevation: 8,
-                  child: ListTile(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                      leading: const Icon(FontAwesomeIcons.moneyBillWave),
-                      title: Text('Total Expenses'),
-                      subtitle: Text(
-                          '₹${financeModel.totalExpenses.toStringAsFixed(2)}')),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TransactionHistoryScreen(),
+                      ),
+                    );
+                  },
+                  child: Card(
+                      elevation: 8,
+                      child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                          leading: const Icon(FontAwesomeIcons.moneyBillWave),
+                          title: const Text('Total Expenses'),
+                          subtitle: Text(
+                              '₹${financeModel.totalExpenses.toStringAsFixed(2)}'))),
                 ),
                 const SizedBox(height: 10),
                 Card(
                   elevation: 8,
                   child: ListTile(
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                          const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                       leading: const Icon(FontAwesomeIcons.piggyBank),
-                      title: Text('Savings & Investment'),
+                      title: const Text('Savings & Investment'),
                       subtitle: Text(
                           '₹${totalSavingsAndInvestment.toStringAsFixed(2)}')),
                 ),
@@ -121,10 +133,10 @@ class HomeScreen extends StatelessWidget {
                   elevation: 8,
                   child: ListTile(
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                          const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                       leading:
                           const Icon(FontAwesomeIcons.wallet), // Changed icon
-                      title: Text('Balance'),
+                      title: const Text('Balance'),
                       subtitle:
                           Text('₹${financeModel.balance.toStringAsFixed(2)}')),
                 ),

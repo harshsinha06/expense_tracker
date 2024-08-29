@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../models/finance_model.dart';
 
 class AddTransactionScreen extends StatefulWidget {
+  const AddTransactionScreen({super.key});
+
   @override
   _AddTransactionScreenState createState() => _AddTransactionScreenState();
 }
@@ -44,16 +46,16 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 labelText: 'Enter amount',
                 prefixText: '₹',
               ),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'Category:',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             DropdownButton<String>(
               value: _selectedCategory,
-              hint: Text('Select a category'),
+              hint: const Text('Select a category'),
               isExpanded: true,
               items: _categories.map((category) {
                 return DropdownMenuItem<String>(
@@ -67,7 +69,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 });
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'Description:',
               style: Theme.of(context).textTheme.titleMedium,
@@ -85,16 +87,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 final description = _descriptionController.text;
 
                 if (_selectedCategory != null && amount > 0) {
-                  // Add transaction logic
                   Provider.of<FinanceModel>(context, listen: false)
                       .addTransaction(
                     amount: amount,
                     category: _selectedCategory!,
                     description: description,
                   );
-                  Navigator.pop(context); // Return to the previous screen
+                  Navigator.pop(context);
                 } else {
-                  // Show an error if the input is invalid
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                         content: Text(

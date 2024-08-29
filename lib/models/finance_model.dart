@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 class FinanceModel extends ChangeNotifier {
   double _totalIncome = 20000;
   double _totalExpenses = 0;
-  double _balance = 20000; // Track balance separately
+  double _balance = 20000;
   final List<Transaction> _transactions = [];
   final List<FinancialGoal> _goals = [];
 
@@ -21,34 +21,39 @@ class FinanceModel extends ChangeNotifier {
 
   void _initializeDefaultTransactions() {
     addTransaction(
-      amount: 12000,
+      amount: 10000,
       category: 'Utility Bills',
       description: 'Rent',
     );
     addTransaction(
       amount: 349,
       category: 'Utility Bills',
-      description: 'Recharge',
+      description: 'Mobile Recharge',
     );
     addTransaction(
       amount: 200,
       category: 'Education',
       description: 'Stationery',
     );
+    addTransaction(
+      amount: 3000,
+      category: 'Savings',
+      description: 'Contribution to goal: Vacation',
+    );
   }
 
   void _initializeDefaultGoals() {
     addGoal(
       name: 'Vacation',
-      targetAmount: 5000,
-      currentAmount: 1000,
-      description: 'Trip to Kedarnath',
+      targetAmount: 10000,
+      currentAmount: 3000,
+      description: 'Trip to Ladakh',
     );
   }
 
   void updateIncome(double amount) {
     _totalIncome = amount;
-    _balance = amount - _totalExpenses; // Update balance based on new income
+    _balance = amount - _totalExpenses;
     notifyListeners();
   }
 
@@ -65,7 +70,7 @@ class FinanceModel extends ChangeNotifier {
     );
     _transactions.add(transaction);
     _totalExpenses += amount;
-    _balance = _totalIncome - _totalExpenses; // Update balance
+    _balance = _totalIncome - _totalExpenses;
     notifyListeners();
   }
 
@@ -88,7 +93,7 @@ class FinanceModel extends ChangeNotifier {
   void updateGoalProgress(String name, double amount) {
     final goal = _goals.firstWhere((goal) => goal.name == name);
     goal.currentAmount += amount;
-    
+
     // Add a transaction for the goal update
     addTransaction(
       amount: amount,
@@ -105,7 +110,9 @@ class FinanceModel extends ChangeNotifier {
   // Method to calculate total for Savings and Investment
   double getTotalSavingsAndInvestment() {
     return _transactions
-        .where((transaction) => transaction.category == 'Savings' || transaction.category == 'Investment')
+        .where((transaction) =>
+            transaction.category == 'Savings' ||
+            transaction.category == 'Investment')
         .fold(0.0, (sum, transaction) => sum + transaction.amount);
   }
 }

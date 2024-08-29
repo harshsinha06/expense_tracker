@@ -13,36 +13,38 @@ class TransactionHistoryScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Transaction History'),
       ),
-      body: Consumer<FinanceModel>(
-        builder: (context, financeModel, child) {
-          final transactions = financeModel.transactions;
+      body: Column(
+        children: [
+          Expanded(
+            child: Consumer<FinanceModel>(
+              builder: (context, financeModel, child) {
+                final transactions = financeModel.transactions;
 
-          // Function to get the appropriate icon based on category
-          IconData getCategoryIcon(String category) {
-            switch (category) {
-              case 'Food':
-                return FontAwesomeIcons.utensils;
-              case 'Chai':
-                return FontAwesomeIcons.mugSaucer;
-              case 'Transportation':
-                return FontAwesomeIcons.car;
-              case 'Utility Bills':
-                return FontAwesomeIcons.lightbulb;
-              case 'Entertainment':
-                return FontAwesomeIcons.film;
-              case 'Education':
-                return FontAwesomeIcons.graduationCap;
-              case 'Savings':
-                return FontAwesomeIcons.piggyBank;
-              default:
-                return FontAwesomeIcons.moneyBillWave;
-            }
-          }
+                // Function to get the appropriate icon based on category
+                IconData getCategoryIcon(String category) {
+                  switch (category) {
+                    case 'Food':
+                      return FontAwesomeIcons.utensils;
+                    case 'Chai':
+                      return FontAwesomeIcons.mugSaucer;
+                    case 'Transportation':
+                      return FontAwesomeIcons.car;
+                    case 'Utility Bills':
+                      return FontAwesomeIcons.lightbulb;
+                    case 'Entertainment':
+                      return FontAwesomeIcons.film;
+                    case 'Education':
+                      return FontAwesomeIcons.graduationCap;
+                    case 'Savings':
+                      return FontAwesomeIcons.piggyBank;
+                    case 'Investment':
+                      return FontAwesomeIcons.chartLine;
+                    default:
+                      return FontAwesomeIcons.moneyBillWave;
+                  }
+                }
 
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
+                return ListView.builder(
                   itemCount: transactions.length,
                   itemBuilder: (context, index) {
                     final transaction = transactions[index];
@@ -75,11 +77,24 @@ class TransactionHistoryScreen extends StatelessWidget {
                       ),
                     );
                   },
-                ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/reports');
+              },
+              child: const Text('View Reports'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               ),
-            ],
-          );
-        },
+            ),
+          ),
+        ],
       ),
     );
   }

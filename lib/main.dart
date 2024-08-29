@@ -6,6 +6,7 @@ import 'screens/add_transaction_screen.dart';
 import 'screens/transaction_history_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/goal_management_screen.dart';
+import 'screens/reports_screen.dart';
 
 void main() {
   runApp(const MyFinanceApp());
@@ -26,10 +27,11 @@ class MyFinanceApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => HomeScreen(),
-          '/addTransaction': (context) => AddTransactionScreen(),
+          '/addTransaction': (context) => const AddTransactionScreen(),
           '/transactions': (context) => const TransactionHistoryScreen(),
           '/settings': (context) => SettingsScreen(),
-          '/goals': (context) => const GoalManagementScreen()
+          '/goals': (context) => const GoalManagementScreen(),
+          '/reports': (context) => ReportScreen()
         },
       ),
     );
